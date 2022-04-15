@@ -4,6 +4,7 @@ const aliensImg = ['img/monster-11.png', 'img/monster-22.png', 'img/monster-33.p
 const instructionsText = document.querySelector('.game-instructions');
 const startButton = document.querySelector('.start-button');
 let alienInterval;
+var pontos = 0;
 
 // Função Movimento e Tiro da Nave
 function flyShip(event){
@@ -89,7 +90,6 @@ function createAliens(){
     newAlien.src = alienSprite;
     newAlien.classList.add('alien');
     newAlien.classList.add('alien-transition');
-    newAlien.classList.add('rotateimg270');
     newAlien.style.left = '370px';
     newAlien.style.top = `${Math.floor(Math.random() * 330) + 30}px`;
     playArea.appendChild(newAlien);
@@ -122,6 +122,7 @@ function checkLaserCollision(laser, alien){
     let alienBottom = alienTop - 30;
     if(laserLeft != 340 && laserLeft + 40 >= alienLeft){
         if(laserTop <= alienTop && laserTop >= alienBottom){
+            pontos = pontos + 100;
             return true;
         } else {
             return false;
@@ -154,10 +155,12 @@ function gameOver(){
     let lasers = document.querySelectorAll('.laser');
     lasers.forEach((laser) => laser.remove());
     setTimeout(()=>{
+        alert('Seus SCORE foi de: ' + pontos + ' pontos!!!')
         alert('GAME OVER!');
         yourShip.style.top = "250px";
         startButton.style.display = "block";
         instructionsText.style.display = "block";
+        pontos = 0;
     });
 }
 
